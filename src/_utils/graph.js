@@ -1,4 +1,3 @@
-import mexp from "math-expression-evaluator";
 import { Parser } from "expr-eval";
 import { isEmpty } from "./validators";
 
@@ -27,7 +26,7 @@ function getPoints(formula, xMin, xMax, yMin, yMax, step = 0.2) {
   for (let i = xMin; i <= xMax; i += step) {
     const yVal = exp.evaluate({ x: i });
 
-    // console.log(`X: ${i}, Y: ${yVal}`);
+    // // console.log(`X: ${i}, Y: ${yVal}`);
     smallestY = getMinY(yVal, smallestY);
     largestY = getMaxY(yVal, largestY);
 

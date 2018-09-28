@@ -84,48 +84,37 @@ class FormField extends Component {
   }
 
   render() {
-    const { value, dirty, errors } = this.state;
-    const {
-      type,
-      label,
-      fieldId,
-      placeholder,
-      children,
-      highlightOff
-    } = this.props;
+    const { dirty, errors } = this.state;
+    const { type, label, fieldId, placeholder, highlightOff } = this.props;
 
     const hasErrors = errors.length > 0; //check to make sure that there are no errors that are returned from the API as well
     const controlClass = !highlightOff
-      ? ["effect-16", dirty ? (hasErrors ? "is-invalid" : "is-valid") : ""]
+      ? ["form-control", dirty ? (hasErrors ? "is-invalid" : "is-valid") : ""]
           .join(" ")
           .trim()
-      : ["effect-16", ""].join(" ").trim();
+      : ["form-control", ""].join(" ").trim();
 
     return (
       <Fragment>
-        <div className="form-group px-3 pb-2">
-          <div className="d-flex flex-row justify-content-between align-items-center">
-            <label htmlFor={fieldId} className="control-label">
-              {label}
-            </label>
-            {/** Render the first error if there are any errors **/}
-            {hasErrors && (
-              <div className="error form-hint text-right m-0 mb-2">
-                {errors[0]}
-              </div>
-            )}
-          </div>
-          {/* Render the children nodes passed to component */}
-          {children}
-          <input
-            type={type}
-            className={controlClass}
-            id={fieldId}
-            // placeholder={placeholder}
-            value={this.props.value}
-            onChange={this.hasChanged}
-          />
+        <div className="d-flex flex-row justify-content-between align-items-center">
+          <label htmlFor={fieldId} className="control-label">
+            {label}
+          </label>
         </div>
+        {/* Render the children nodes passed to component */}
+        {/* {children} */}
+        <input
+          type={type}
+          className={controlClass}
+          id={fieldId}
+          placeholder={placeholder}
+          value={this.props.value}
+          onChange={this.hasChanged}
+        />
+        {/** Render the first error if there are any errors **/}
+        {hasErrors && (
+          <div className="error form-hint text-right m-0 mb-2">{errors[0]}</div>
+        )}
       </Fragment>
     );
   }

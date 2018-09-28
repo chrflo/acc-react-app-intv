@@ -37,7 +37,7 @@ class Formula extends Component {
         formula: value
       });
 
-      console.log(value);
+      // console.log(value);
 
       //this is where we will call our action to update the graph with the history
     };

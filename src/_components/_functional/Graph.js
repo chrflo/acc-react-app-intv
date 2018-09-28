@@ -14,21 +14,14 @@ import { dataPoints } from "../../_utils/graph";
 //action
 import { clearFormula } from "../../_actions/graphAction";
 
-import {
-  VictoryChart,
-  VictoryGroup,
-  VictoryLine,
-  VictoryLabel,
-  VictoryAxis,
-  VictoryTheme
-} from "victory";
+import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
 
 class Graph extends Component {
   constructor(props) {
     super(props);
 
     this.handleChange = event => {
-      console.log(event);
+      // console.log(event);
 
       const { fieldName, value, errors } = event;
       const prop = fieldName;
@@ -51,8 +44,9 @@ class Graph extends Component {
         ...state,
         scale: {
           ...scale,
-          [prop]: parseInt(value)
-        }
+          [prop]: parseInt(value, 10)
+        },
+        data
       });
 
       //this is where we are going to call our action
@@ -101,32 +95,36 @@ class Graph extends Component {
   }
   render() {
     const scaleValidator = (prop, compareVal) => value => {
+      if (isEmpty(value)) {
+        throw new Error(`${prop} cannot empty`);
+      }
+
       isNumber(value); //check to make sure that it is a number
 
       //let's make sure to check and see that the mis and max don't go above or below eachother
       switch (prop) {
         case "xMin":
           if (value >= compareVal) {
-            throw `xMin ${value} cannot be >= xMax`;
+            throw new Error(`xMin ${value} cannot be >= xMax`);
           }
           break;
         case "xMax":
           if (value <= compareVal) {
-            throw `xMin ${value} cannot be <= xMax`;
+            throw new Error(`xMin ${value} cannot be <= xMax`);
           }
           break;
         case "yMin":
           if (value >= compareVal) {
-            throw `xMin ${value} cannot be >= yMax`;
+            throw new Error(`xMin ${value} cannot be >= yMax`);
           }
           break;
         case "yMax":
           if (value <= compareVal) {
-            throw `xMin ${value} cannot be <= yMin`;
+            throw new Error(`xMin ${value} cannot be <= yMin`);
           }
           break;
         default:
-          throw `${prop} not found.`;
+          throw new Error(`${prop} not found.`);
       }
 
       return true;
@@ -136,7 +134,12 @@ class Graph extends Component {
       <div className="graph">
         <div className="container">
           <VictoryChart
-            style={{ parent: { maxWidth: "100%", boarder: "1px solid #ccc" } }}
+            style={{
+              parent: { maxWidth: "100%" }
+            }}
+            padding={{
+              top: 0
+            }}
             theme={VictoryTheme.material}
             minDomain={{ y: this.state.scale.yMin, x: this.state.scale.xMin }}
             maxDomain={{ y: this.state.scale.yMax, x: this.state.scale.xMax }}
@@ -145,51 +148,62 @@ class Graph extends Component {
           >
             <VictoryLine
               style={{
-                data: { stroke: "#8884d8" },
+                data: { stroke: "#c43a31" },
                 parent: { border: "1px solid #ccc" }
+              }}
+              animate={{
+                // duration: 2000,
+                onLoad: { duration: 5000 }
+              }}
+              padding={{
+                top: 0
               }}
               data={this.state.data.points}
             />
           </VictoryChart>
-          <div className="container">
-            <div className="form-group">
-              <div className="row">
-                <div className="col-sm">
-                  <FormField
-                    label="Min X"
-                    fieldId="xMin"
-                    validator={scaleValidator("xMin", this.state.scale.xMax)}
-                    onStateChanged={this.handleChange}
-                  />
-                </div>
-                <div className="col-sm">
-                  <FormField
-                    label="Max X"
-                    fieldId="xMax"
-                    validator={scaleValidator("xMax", this.state.scale.xMin)}
-                    onStateChanged={this.handleChange}
-                  />
-                </div>
+          {/* <div className="container"> */}
+          <div className="form-group">
+            <div className="row">
+              <div className="col-sm align-self-start">
+                <FormField
+                  label="Min X"
+                  fieldId="xMin"
+                  validator={scaleValidator("xMin", this.state.scale.xMax)}
+                  onStateChanged={this.handleChange}
+                  placeholder={this.state.scale.xMin}
+                />
               </div>
-              <div className="row">
-                <div className="col-sm">
-                  <FormField
-                    label="Min Y"
-                    fieldId="yMin"
-                    validator={scaleValidator("yMin", this.state.scale.yMax)}
-                    onStateChanged={this.handleChange}
-                  />
-                </div>
-                <div className="col-sm">
-                  <FormField
-                    label="Max Y"
-                    fieldId="yMax"
-                    validator={scaleValidator("yMax", this.state.scale.yMin)}
-                    onStateChanged={this.handleChange}
-                  />
-                </div>
+              <div className="col-sm">
+                <FormField
+                  label="Max X"
+                  fieldId="xMax"
+                  validator={scaleValidator("xMax", this.state.scale.xMin)}
+                  onStateChanged={this.handleChange}
+                  placeholder={this.state.scale.xMax}
+                />
               </div>
             </div>
+            <div className="row">
+              <div className="col-sm">
+                <FormField
+                  label="Min Y"
+                  fieldId="yMin"
+                  validator={scaleValidator("yMin", this.state.scale.yMax)}
+                  onStateChanged={this.handleChange}
+                  placeholder={this.state.scale.yMin}
+                />
+              </div>
+              <div className="col-sm">
+                <FormField
+                  label="Max Y"
+                  fieldId="yMax"
+                  validator={scaleValidator("yMax", this.state.scale.yMin)}
+                  onStateChanged={this.handleChange}
+                  placeholder={this.state.scale.yMax}
+                />
+              </div>
+            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>

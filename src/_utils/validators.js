@@ -1,6 +1,3 @@
-import React from "react";
-import mexp from "math-expression-evaluator";
-import { replaceX } from "../_utils/formula";
 import { Parser } from "expr-eval";
 
 /* 
@@ -9,27 +6,44 @@ import { Parser } from "expr-eval";
  * just change the x to 1 and see if the exp eval is successful
  */
 export const validateFormula = formula => {
-  try {
-    const parser = new Parser().parse(formula);
-    const { tokens } = parser;
+  let parser;
+  if (isEmpty(formula)) {
+    throw new Error("Formula cannot be empty.");
+  }
 
-    //check to see if there is more than variable and reject
-    let prevVar = "";
-    tokens.forEach(element => {
-      if (element.type === "IVAR") {
-        if (prevVar !== element.value && prevVar !== "") {
-          throw `Multiple variables detected (${prevVar}, ${
-            element.value
-          }, ...).`;
-        }
-        prevVar = element.value;
-      }
-    });
-    console.log(tokens);
+  try {
+    parser = new Parser().parse(formula);
   } catch (err) {
     console.error(err);
-    throw "Invalid formula.";
+    throw new Error("Invalid formula.");
   }
+
+  const { tokens } = parser;
+
+  //check to see if there is more than variable and reject
+  let prevVar = "";
+
+  // let's handle the case here all the user enters is text
+  const regex = /[A-Z]|[a-z]/gm;
+  if (
+    tokens.length === 1 &&
+    formula.length !== 1 &&
+    regex.exec(formula) !== null
+  ) {
+    throw new Error("Multiple variables in single string.");
+  }
+
+  tokens.forEach(element => {
+    if (element.type === "IVAR") {
+      if (prevVar !== element.value && prevVar !== "") {
+        throw new Error(
+          `Multiple variables detected (${prevVar}, ${element.value}, ...).`
+        );
+      }
+      prevVar = element.value;
+    }
+  });
+  // console.log(tokens);
 
   return true;
 };
@@ -51,7 +65,7 @@ export const isEmpty = obj => {
  */
 export const isNumber = obj => {
   if (isNaN(obj)) {
-    throw "Is not a number";
+    throw new Error("Is not a number");
   }
   return true;
 };
