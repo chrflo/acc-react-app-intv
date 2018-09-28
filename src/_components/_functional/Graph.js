@@ -140,6 +140,10 @@ class Graph extends Component {
             padding={{
               top: 0
             }}
+            animate={{
+              duration: 5000
+              // onLoad: { duration: 5000 }
+            }}
             theme={VictoryTheme.material}
             minDomain={{ y: this.state.scale.yMin, x: this.state.scale.xMin }}
             maxDomain={{ y: this.state.scale.yMax, x: this.state.scale.xMax }}
@@ -152,8 +156,13 @@ class Graph extends Component {
                 parent: { border: "1px solid #ccc" }
               }}
               animate={{
-                // duration: 2000,
-                onLoad: { duration: 5000 }
+                duration: 5000,
+                onEnter: {
+                  duration: 5000
+                },
+                onLoad: {
+                  duration: 5000
+                }
               }}
               padding={{
                 top: 0
