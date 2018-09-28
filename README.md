@@ -3,10 +3,11 @@
 	Author: Christopher Flora
 	
 	Works Sited:
-	1.
-	2.
-	3.
-	4.
+	1.  author: Ghad Chinda
+       url: https://scotch.io/tutorials/password-strength-meter-in-react
+	2. MERN Stack Front To Back Full Stack React, Redux & Node by Paul Traversy
+	3. Victory Chart Examples
+	4. Modal Examples
 	5. Various tutorials and examples that I might have missed
 
 	Install:
