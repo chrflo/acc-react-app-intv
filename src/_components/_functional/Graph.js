@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 // components
 import FormField from "../_common/FormField";
+import Chart from "./Chart";
+import ModalGraph from "./ModalGraph";
 
 // validators
 import { isEmpty, isNumber } from "../../_utils/validators";
@@ -13,8 +15,6 @@ import { dataPoints } from "../../_utils/graph";
 
 //action
 import { clearFormula } from "../../_actions/graphAction";
-
-import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
 
 class Graph extends Component {
   constructor(props) {
@@ -55,6 +55,12 @@ class Graph extends Component {
       // }
     };
 
+    //functions for the modal
+    this.chartClicked = () => {
+      const { state } = this.state;
+      this.setState({ ...state, showModal: true });
+    };
+
     this.state = {
       scale: {
         xMin: -10,
@@ -69,7 +75,8 @@ class Graph extends Component {
         minY: Number.MIN_SAFE_INTEGER,
         maxY: Number.MAX_SAFE_INTEGER
       },
-      errors: {}
+      errors: {},
+      showModal: false
     };
 
     /*
@@ -140,44 +147,28 @@ class Graph extends Component {
 
     return (
       <div className="graph">
-        <div className="container">
-          <VictoryChart
-            style={{
-              parent: { maxWidth: "100%" }
-            }}
-            padding={{
-              top: 0
-            }}
-            animate={{
-              duration: 5000
-              // onLoad: { duration: 5000 }
-            }}
-            theme={VictoryTheme.material}
-            minDomain={{ y: this.state.scale.yMin, x: this.state.scale.xMin }}
-            maxDomain={{ y: this.state.scale.yMax, x: this.state.scale.xMax }}
-            width={450}
-            height={450}
-          >
-            <VictoryLine
-              style={{
-                data: { stroke: "#c43a31" },
-                parent: { border: "1px solid #ccc" }
-              }}
-              animate={{
-                duration: 5000,
-                onEnter: {
-                  duration: 5000
-                },
-                onLoad: {
-                  duration: 5000
-                }
-              }}
-              padding={{
-                top: 0
-              }}
+        <button onClick={this.chartClicked}>Trigger Modal</button>
+        <ModalGraph
+          chart={
+            <Chart
+              xMin={this.state.scale.xMin}
+              xMax={this.state.scale.xMax}
+              yMin={this.state.scale.yMin}
+              yMax={this.state.scale.yMax}
               data={this.state.data.points}
             />
-          </VictoryChart>
+          }
+          showModal={this.state.showModal}
+        />
+        <div className="container">
+          <Chart
+            xMin={this.state.scale.xMin}
+            xMax={this.state.scale.xMax}
+            yMin={this.state.scale.yMin}
+            yMax={this.state.scale.yMax}
+            data={this.state.data.points}
+            // onSelected={this.chartClicked}
+          />
           {/* <div className="container"> */}
           <div className="form-group">
             <div className="row">
