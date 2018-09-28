@@ -29,7 +29,17 @@ class Formula extends Component {
      * set the onclicked event for the history list
      */
     this.isClicked = event => {
+      //handle the case that someone clicks on the number
+      //TODO: make this so that number is not clickable
+      if (!event || !event.target) {
+        return;
+      }
+
       const { target } = event;
+      if (!target.className.includes("list-group-item")) {
+        return;
+      }
+
       const { value } = target.attributes.value;
       const state = this.state;
       this.setState({
@@ -37,9 +47,8 @@ class Formula extends Component {
         formula: value
       });
 
-      // console.log(value);
-
       //this is where we will call our action to update the graph with the history
+      //TODO: this would be a better way, to store our history in redux, don't have time to complete, will work on later
     };
 
     /*

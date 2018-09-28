@@ -106,21 +106,29 @@ class Graph extends Component {
         case "xMin":
           if (value >= compareVal) {
             throw new Error(`xMin ${value} cannot be >= xMax`);
+          } else if (value < Number.MIN_SAFE_INTEGER) {
+            throw new Error(`xMin cannot exceed ${Number.MIN_SAFE_INTEGER}`);
           }
           break;
         case "xMax":
           if (value <= compareVal) {
-            throw new Error(`xMin ${value} cannot be <= xMax`);
+            throw new Error(`xMax ${value} cannot be <= xMin`);
+          } else if (value > Number.MAX_SAFE_INTEGER) {
+            throw new Error(`xMax cannot exceed ${Number.MAX_SAFE_INTEGER}`);
           }
           break;
         case "yMin":
           if (value >= compareVal) {
-            throw new Error(`xMin ${value} cannot be >= yMax`);
+            throw new Error(`yMin ${value} cannot be >= yMax`);
+          } else if (value < Number.MIN_SAFE_INTEGER) {
+            throw new Error(`yMin cannot exceed ${Number.MIN_SAFE_INTEGER}`);
           }
           break;
         case "yMax":
           if (value <= compareVal) {
-            throw new Error(`xMin ${value} cannot be <= yMin`);
+            throw new Error(`yMax ${value} cannot be <= yMin`);
+          } else if (value > Number.MAX_SAFE_INTEGER) {
+            throw new Error(`yMax cannot exceed ${Number.MAX_SAFE_INTEGER}`);
           }
           break;
         default:
