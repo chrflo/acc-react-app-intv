@@ -3,6 +3,7 @@ import { Provider } from "react-redux"; //wraps around everything and provides o
 
 // add the style
 import "./App.css";
+import "./_styles/bootstrap.css";
 
 // add the components
 import Dashboard from "./_components/_layout/Dashboard";
