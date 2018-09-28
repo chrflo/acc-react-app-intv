@@ -30,14 +30,14 @@ class Formula extends Component {
      */
     this.isClicked = event => {
       const { target } = event;
-      const { textContent } = target;
+      const { value } = target.attributes.value;
       const state = this.state;
       this.setState({
         ...state,
-        formula: textContent
+        formula: value
       });
 
-      console.log(textContent);
+      console.log(value);
 
       //this is where we will call our action to update the graph with the history
     };
@@ -66,9 +66,6 @@ class Formula extends Component {
 
       const date = Date.now(); // get the seconds time
       const currentState = this.state;
-
-      console.log("Err: " + JSON.stringify(currentState.errors));
-      console.log("ErrLen: " + !isEmpty(currentState.errors));
 
       if (isEmpty(currentState.errors)) {
         let history =
@@ -129,7 +126,7 @@ class Formula extends Component {
                     placeholder="Please enter a formula"
                     validator={validateFormula}
                     onStateChanged={this.handleChange}
-                    // value={this.state.formula}
+                    value={this.state.formula}
                   />
                   <input type="submit" className="btn btn-info btn-sm mt-3" />
                 </div>

@@ -96,10 +96,13 @@ class FormField extends Component {
 
     const hasErrors = errors.length > 0; //check to make sure that there are no errors that are returned from the API as well
     const controlClass = !highlightOff
-      ? ["form-control", dirty ? (hasErrors ? "is-invalid" : "is-valid") : ""]
+      ? [
+          "form-control form-control-sm",
+          dirty ? (hasErrors ? "is-invalid" : "is-valid") : ""
+        ]
           .join(" ")
           .trim()
-      : ["form-control", ""].join(" ").trim();
+      : ["form-control form-control-sm", ""].join(" ").trim();
 
     return (
       <Fragment>
@@ -122,7 +125,7 @@ class FormField extends Component {
             className={controlClass}
             id={fieldId}
             placeholder={placeholder}
-            value={value}
+            value={this.props.value}
             onChange={this.hasChanged}
           />
         </div>
@@ -140,7 +143,8 @@ FormField.propTypes = {
   children: PropTypes.node,
   validator: PropTypes.func,
   onStateChanged: PropTypes.func,
-  highlightOff: PropTypes.bool
+  highlightOff: PropTypes.bool,
+  value: PropTypes.string
 };
 
 export default FormField;

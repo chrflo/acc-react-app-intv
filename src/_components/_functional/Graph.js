@@ -43,31 +43,22 @@ class Graph extends Component {
       // if the bounds change, check to see if there is a formula,
       // if there is, we need to regen the data points but we should consider
       //this only if the current data sets min / max values are exceeded
-      // const data =
-      //   !isEmpty(formula) && (yMin < state.data.minY || yMax > state.data.maxY)
-      //     ? dataPoints(formula, xMin, xMax, yMin, yMax)
-      //     : state.data;
+      const data = !isEmpty(formula)
+        ? dataPoints(formula, xMin, xMax, yMin, yMax)
+        : state.data;
 
       this.setState({
         ...state,
         scale: {
           ...scale,
-          [prop]: value
-        },
-        formula: "",
-        errors,
-        data: {
-          // if user changes the boundaries in any way, reset the data base until they submit again
-          points: [],
-          minY: Number.MIN_SAFE_INTEGER,
-          maxY: Number.MAX_SAFE_INTEGER
+          [prop]: parseInt(value)
         }
       });
 
       //this is where we are going to call our action
-      if (!isEmpty(formula)) {
-        this.props.clearFormula();
-      }
+      // if (!isEmpty(formula)) {
+      //   this.props.clearFormula();
+      // }
     };
 
     this.state = {
@@ -109,6 +100,38 @@ class Graph extends Component {
     };
   }
   render() {
+    const scaleValidator = (prop, compareVal) => value => {
+      isNumber(value); //check to make sure that it is a number
+
+      //let's make sure to check and see that the mis and max don't go above or below eachother
+      switch (prop) {
+        case "xMin":
+          if (value >= compareVal) {
+            throw `xMin ${value} cannot be >= xMax`;
+          }
+          break;
+        case "xMax":
+          if (value <= compareVal) {
+            throw `xMin ${value} cannot be <= xMax`;
+          }
+          break;
+        case "yMin":
+          if (value >= compareVal) {
+            throw `xMin ${value} cannot be >= yMax`;
+          }
+          break;
+        case "yMax":
+          if (value <= compareVal) {
+            throw `xMin ${value} cannot be <= yMin`;
+          }
+          break;
+        default:
+          throw `${prop} not found.`;
+      }
+
+      return true;
+    };
+
     return (
       <div className="graph">
         <div className="container">
@@ -135,7 +158,7 @@ class Graph extends Component {
                   <FormField
                     label="Min X"
                     fieldId="xMin"
-                    validator={isNumber}
+                    validator={scaleValidator("xMin", this.state.scale.xMax)}
                     onStateChanged={this.handleChange}
                   />
                 </div>
@@ -143,7 +166,7 @@ class Graph extends Component {
                   <FormField
                     label="Max X"
                     fieldId="xMax"
-                    validator={isNumber}
+                    validator={scaleValidator("xMax", this.state.scale.xMin)}
                     onStateChanged={this.handleChange}
                   />
                 </div>
@@ -153,7 +176,7 @@ class Graph extends Component {
                   <FormField
                     label="Min Y"
                     fieldId="yMin"
-                    validator={isNumber}
+                    validator={scaleValidator("yMin", this.state.scale.yMax)}
                     onStateChanged={this.handleChange}
                   />
                 </div>
@@ -161,7 +184,7 @@ class Graph extends Component {
                   <FormField
                     label="Max Y"
                     fieldId="yMax"
-                    validator={isNumber}
+                    validator={scaleValidator("yMax", this.state.scale.yMin)}
                     onStateChanged={this.handleChange}
                   />
                 </div>

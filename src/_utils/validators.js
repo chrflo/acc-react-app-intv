@@ -1,6 +1,7 @@
 import React from "react";
 import mexp from "math-expression-evaluator";
 import { replaceX } from "../_utils/formula";
+import { Parser } from "expr-eval";
 
 /* 
  * function to validate the formula passin by the user
@@ -8,17 +9,29 @@ import { replaceX } from "../_utils/formula";
  * just change the x to 1 and see if the exp eval is successful
  */
 export const validateFormula = formula => {
-  const f = replaceX(formula, 1);
-  return mexp.eval(f);
+  try {
+    const parser = new Parser().parse(formula);
+    const { tokens } = parser;
 
-  //   let tmp = undefined;
-  //   try {
-  //     tmp = mexp.eval(f.replace("x", "1"));
-  //   } catch (err) {
-  //     console.error(`The provided formula (${formula}) is not valid.`);
-  //   }
+    //check to see if there is more than variable and reject
+    let prevVar = "";
+    tokens.forEach(element => {
+      if (element.type === "IVAR") {
+        if (prevVar !== element.value && prevVar !== "") {
+          throw `Multiple variables detected (${prevVar}, ${
+            element.value
+          }, ...).`;
+        }
+        prevVar = element.value;
+      }
+    });
+    console.log(tokens);
+  } catch (err) {
+    console.error(err);
+    throw "Invalid formula.";
+  }
 
-  //   return tmp !== 0;
+  return true;
 };
 
 /* 
@@ -38,7 +51,7 @@ export const isEmpty = obj => {
  */
 export const isNumber = obj => {
   if (isNaN(obj)) {
-    throw "Invalid";
+    throw "Is not a number";
   }
   return true;
 };
