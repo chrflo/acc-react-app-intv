@@ -1,0 +1,10 @@
+.form-hint {
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: -5px auto 5px;
+  color: #999;
+}
+.form-hint.error {
+  color: #c00;
+  font-size: 0.8rem;
+}

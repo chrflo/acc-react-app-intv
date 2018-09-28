@@ -4,7 +4,7 @@ img {
 
 .dashboard {
   position: relative;
-  background: url('./_img/bg.jpg') no-repeat;
+  background: url("./_img/bg.jpg") no-repeat;
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -16,8 +16,15 @@ img {
   padding-top: 80px;
 }
 
+.page-footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .navHeader {
-  font-family: 'Allberta', Arial, Helvetica, sans-serif;
+  font-family: "Allberta", Arial, Helvetica, sans-serif;
   font-size: 20px;
   color: white;
   line-height: 25px;
@@ -29,6 +36,7 @@ img {
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
   height: 100%;
 }
 

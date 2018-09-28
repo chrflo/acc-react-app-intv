@@ -1,5 +1,6 @@
 import React from "react";
 import mexp from "math-expression-evaluator";
+import { replaceX } from "../_utils/formula";
 
 /* 
  * function to validate the formula passin by the user
@@ -7,7 +8,8 @@ import mexp from "math-expression-evaluator";
  * just change the x to 1 and see if the exp eval is successful
  */
 export const validateFormula = formula => {
-  return mexp.eval(formula.replace("x", "1"));
+  const f = replaceX(formula, 1);
+  return mexp.eval(f);
 
   //   let tmp = undefined;
   //   try {
@@ -29,4 +31,14 @@ export const isEmpty = obj => {
     (typeof obj === "object" && Object.keys(obj).length === 0) ||
     (typeof obj === "string" && obj.trim().length === 0)
   );
+};
+
+/*
+ * Check to see if the input is a number only
+ */
+export const isNumber = obj => {
+  if (isNaN(obj)) {
+    throw "Invalid";
+  }
+  return true;
 };

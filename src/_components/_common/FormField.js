@@ -26,8 +26,7 @@
 
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-import ReactTooltip from "react-tooltip";
-import { isEmpty } from "../../_utils/validators";
+import "../../_styles/form.css";
 
 class FormField extends Component {
   constructor(props) {
@@ -95,8 +94,7 @@ class FormField extends Component {
       highlightOff
     } = this.props;
 
-    const apiError = isEmpty(this.props.apiError) ? "" : this.props.apiError; //Let's check to see if 1. we don't want highlighting & if there is an error from the backend
-    const hasErrors = errors.length > 0 || !isEmpty(apiError); //check to make sure that there are no errors that are returned from the API as well
+    const hasErrors = errors.length > 0; //check to make sure that there are no errors that are returned from the API as well
     const controlClass = !highlightOff
       ? ["form-control", dirty ? (hasErrors ? "is-invalid" : "is-valid") : ""]
           .join(" ")
@@ -112,16 +110,14 @@ class FormField extends Component {
             </label>
             {/** Render the first error if there are any errors **/}
             {hasErrors && (
-              <div className="error form-hint font-weight-bold text-right m-0 mb-2">
-                {errors[0] || apiError}
+              <div className="error form-hint text-right m-0 mb-2">
+                {errors[0]}
               </div>
             )}
           </div>
           {/* Render the children nodes passed to component */}
           {children}
           <input
-            data-tip
-            data-for={highlightOff ? "" : fieldId}
             type={type}
             className={controlClass}
             id={fieldId}
@@ -129,28 +125,6 @@ class FormField extends Component {
             value={value}
             onChange={this.hasChanged}
           />
-          {/* <ReactTooltip
-            id={type}
-            effect="solid"
-            delayHide={500}
-            delayShow={500}
-            place={"right"}
-            border={true}
-            event="click"
-          >
-            <p>
-              To conform with our Strong Password policy, you are required to
-              use a sufficiently strong password.
-            </p>
-            <ol>
-              <li>Password must be between 6 and 12 characters.</li>
-              <li>
-                Must contain at least one upper and lower case characters.
-              </li>
-              <li>Must contain at least one number.</li>
-              <li>Must contain at least one special character.</li>
-            </ol>
-          </ReactTooltip> */}
         </div>
       </Fragment>
     );
@@ -166,8 +140,7 @@ FormField.propTypes = {
   children: PropTypes.node,
   validator: PropTypes.func,
   onStateChanged: PropTypes.func,
-  highlightOff: PropTypes.bool,
-  apiError: PropTypes.string
+  highlightOff: PropTypes.bool
 };
 
 export default FormField;

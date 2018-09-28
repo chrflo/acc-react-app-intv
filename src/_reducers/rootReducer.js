@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import graphReducer from "./formulaReducer";
+import graphReducer from "./graphReducer";
 import errorReducer from "./errorReducer";
 
 export default combineReducers({

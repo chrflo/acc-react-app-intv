@@ -1,20 +1,33 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+//Components
 import FormField from "../_common/FormField";
 import History from "./History";
+
+//actions
+import { updateFormula } from "../../_actions/graphAction";
+
+//validators
 import { isEmpty, validateFormula } from "../../_utils/validators";
 
 class Formula extends Component {
   constructor(props) {
     super(props);
 
+    /*
+     * The state of the component
+     */
     this.state = {
       formula: "", //formula is the acutal formula that is entered by the user
-      //   historicForumlas: new Set(),
       history: {}, //history will be an dict on date: previous formulas
       errors: {} //any errors that we encounter
     };
 
-    // set the onclicked event for the history list
+    /*
+     * set the onclicked event for the history list
+     */
     this.isClicked = event => {
       const { target } = event;
       const { textContent } = target;
@@ -29,6 +42,9 @@ class Formula extends Component {
       //this is where we will call our action to update the graph with the history
     };
 
+    /*
+     * handle a change event to the input
+     */
     this.handleChange = event => {
       const { value, errors } = event;
 
@@ -41,13 +57,20 @@ class Formula extends Component {
       });
     };
 
+    /*
+     * Hangle the on submit action of the form
+     * This is where we call our redux action
+     */
     this.onSubmit = event => {
       event.preventDefault();
 
       const date = Date.now(); // get the seconds time
       const currentState = this.state;
 
-      if (this.state.errors.length === 0) {
+      console.log("Err: " + JSON.stringify(currentState.errors));
+      console.log("ErrLen: " + !isEmpty(currentState.errors));
+
+      if (isEmpty(currentState.errors)) {
         let history =
           currentState.formula in currentState.history
             ? {
@@ -74,7 +97,21 @@ class Formula extends Component {
         });
 
         //this is where we are going to call our action
+        this.props.updateFormula(this.state.formula);
       }
+    };
+
+    /*
+     * Since we are using Redux and the properties are form the respective reducers
+     * Add a new life cylce method to check when the component recieves new properties 
+     * so that we are able to update the state accordingly 
+     */
+    this.componentWillReceiveProps = nextProps => {
+      if (nextProps.errors) {
+        this.setState({ errors: nextProps.errors });
+      }
+
+      //TODO:what else do we need to in this?
     };
   }
   render() {
@@ -83,7 +120,7 @@ class Formula extends Component {
         <div className="container">
           <div className="row">
             <div className="col">
-              <form action="create-profile.html" onSubmit={this.onSubmit}>
+              <form onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <FormField
                     type="text"
@@ -92,7 +129,7 @@ class Formula extends Component {
                     placeholder="Please enter a formula"
                     validator={validateFormula}
                     onStateChanged={this.handleChange}
-                    value={this.state.formula}
+                    // value={this.state.formula}
                   />
                   <input type="submit" className="btn btn-info btn-sm mt-3" />
                 </div>
@@ -113,4 +150,19 @@ class Formula extends Component {
   }
 }
 
-export default Formula;
+const mapStateToProps = state => ({
+  formula: state.formula,
+  errors: state.errors
+});
+
+Formula.propTypes = {
+  updateFormula: PropTypes.func,
+  formula: PropTypes.string.isRequired,
+  // history: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+export default connect(
+  mapStateToProps,
+  { updateFormula }
+)(Formula);

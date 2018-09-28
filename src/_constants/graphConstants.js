@@ -1,3 +1,4 @@
 export const graphConstants = {
-  NEW_FORMULA: "NEW_FORMULA"
+  PLOT_FORMULA: "PLOT_FORMULA",
+  CLEAR_FORMULA: "CLEAR_FORMULA"
 };
