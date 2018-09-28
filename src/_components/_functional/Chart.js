@@ -21,7 +21,7 @@ class Chart extends Component {
           top: 0
         }}
         animate={{
-          duration: 5000
+          duration: 2000
           // onLoad: { duration: 5000 }
         }}
         theme={VictoryTheme.material}
@@ -37,12 +37,12 @@ class Chart extends Component {
             parent: { border: "1px solid #ccc" }
           }}
           animate={{
-            duration: 5000,
+            duration: 2000,
             onEnter: {
-              duration: 5000
+              duration: 2000
             },
             onLoad: {
-              duration: 5000
+              duration: 2000
             }
           }}
           padding={{

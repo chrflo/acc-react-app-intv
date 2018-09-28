@@ -61,6 +61,11 @@ class Graph extends Component {
       this.setState({ ...state, showModal: true });
     };
 
+    this.closeModal = () => {
+      const { state } = this.state;
+      this.setState({ ...state, showModal: false });
+    };
+
     this.state = {
       scale: {
         xMin: -10,
@@ -147,7 +152,12 @@ class Graph extends Component {
 
     return (
       <div className="graph">
-        <button onClick={this.chartClicked}>Trigger Modal</button>
+        <button
+          className="btn btn-info btn-sm mt-3"
+          onClick={this.chartClicked}
+        >
+          Print Chart
+        </button>
         <ModalGraph
           chart={
             <Chart
@@ -159,6 +169,7 @@ class Graph extends Component {
             />
           }
           showModal={this.state.showModal}
+          closeModal={this.closeModal}
         />
         <div className="container">
           <Chart
