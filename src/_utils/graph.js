@@ -11,13 +11,20 @@ export const dataPoints = (formula, xMin, xMax, yMin, yMax, step) => {
 
   return isEmpty(f) || isEmpty(xMin) || isEmpty(xMax)
     ? [] // generate the empty dataset
-    : getPoints(f, xMin, xMax, yMin, yMax, step);
+    : getPoints(
+        f,
+        parseInt(xMin, 10),
+        parseInt(xMax, 10),
+        parseInt(yMin, 10),
+        parseInt(yMax, 10),
+        step
+      );
 };
 
 /*
  * Get the 
  */
-function getPoints(formula, xMin, xMax, yMin, yMax, step = 0.2) {
+function getPoints(formula, xMin, xMax, yMin, yMax, step = 1) {
   let points = [];
   let smallestY = Number.MAX_SAFE_INTEGER;
   let largestY = Number.MIN_SAFE_INTEGER;

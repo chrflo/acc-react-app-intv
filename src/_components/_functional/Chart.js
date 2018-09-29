@@ -36,6 +36,7 @@ class Chart extends Component {
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc" }
           }}
+          interpolation="natural"
           animate={{
             duration: 2000,
             onEnter: {
