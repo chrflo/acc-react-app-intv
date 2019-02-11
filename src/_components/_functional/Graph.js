@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 // components
 import FormField from "../_common/FormField";
@@ -235,11 +235,11 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-Graph.propTypes = {
-  // clearFormula: PropTypes.func,
-  // formula: PropTypes.string.isRequired,
-  // errors: PropTypes.object.isRequired
-};
+// Graph.propTypes = {
+//   // clearFormula: PropTypes.func,
+//   // formula: PropTypes.string.isRequired,
+//   // errors: PropTypes.object.isRequired
+// };
 
 export default connect(
   mapStateToProps,

@@ -162,10 +162,10 @@ const mapStateToProps = state => ({
 });
 
 Formula.propTypes = {
-  updateFormula: PropTypes.func,
+  updateFormula: PropTypes.func
   // formula: PropTypes.string.isRequired,
   // history: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+  // errors: PropTypes.object.isRequired
 };
 
 export default connect(

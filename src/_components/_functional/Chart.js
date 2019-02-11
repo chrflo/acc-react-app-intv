@@ -60,8 +60,9 @@ Chart.propTypes = {
   xMax: PropTypes.number.isRequired,
   yMin: PropTypes.number.isRequired,
   yMax: PropTypes.number.isRequired,
-  data: PropTypes.object.isRequired,
-  onSelected: PropTypes.func
+  data: PropTypes.object.isRequired
+  // ,
+  // onSelected: PropTypes.func
 };
 
 export default Chart;

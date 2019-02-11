@@ -31,6 +31,7 @@ class History extends Component {
 
     let listFormula = [
       <li
+        key={history.date}
         className="list-group-item list-group-item-action"
         placeholder="Formula History"
       />
