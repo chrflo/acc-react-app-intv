@@ -1,26 +1,26 @@
 /*
  * author: Ghad Chinda
  * url: https://scotch.io/tutorials/password-strength-meter-in-react
- * 
+ *
  * In this component, the following are handled:
  * Input State First:
- * we initialized state for the form field component to keep track of the current value of the input field, the dirty status 
+ * we initialized state for the form field component to keep track of the current value of the input field, the dirty status
  * of the field, and any existing validation errors. A field becomes dirty the moment its value first changes and remains dirty.
- * 
- * Handle Input Change Next: 
- * we added the hasChanged(e) event handler to update the state value to the current input value on every change to the 
- * input. In the handler, we also resolve the dirty state of the field. We check if the field is a required field based on props, and add a validation 
+ *
+ * Handle Input Change Next:
+ * we added the hasChanged(e) event handler to update the state value to the current input value on every change to the
+ * input. In the handler, we also resolve the dirty state of the field. We check if the field is a required field based on props, and add a validation
  * error to the state errors array if the value is empty.
- * 
- * However, if the field is not a required field or is required but not empty, then we delegate to the validation function passed in the optional 
+ *
+ * However, if the field is not a required field or is required but not empty, then we delegate to the validation function passed in the optional
  * validator prop, calling it with the current input value, and adding the thrown validation error to the state errors array (if there is any error).
- * 
- * Finally, we update the state and pass a callback function to be called after the update. The callback function simply calls the function passed 
+ *
+ * Finally, we update the state and pass a callback function to be called after the update. The callback function simply calls the function passed
  * in the optional onStateChanged prop, passing the updated state as its argument. This will become handy for propagating state changes outside the component.
- * 
+ *
  * Rendering and Props:
- * we are simply rendering the input field and its label. We also conditionally render the first error in the state errors 
- * array (if there are any errors). Notice how we dynamically set the classes for the input field to show validation status using built-in classes from Bootstrap. 
+ * we are simply rendering the input field and its label. We also conditionally render the first error in the state errors
+ * array (if there are any errors). Notice how we dynamically set the classes for the input field to show validation status using built-in classes from Bootstrap.
  * We also render any children nodes contained in the component.
  */
 
@@ -126,7 +126,7 @@ FormField.propTypes = {
   fieldId: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   required: PropTypes.bool,
-  children: PropTypes.node,
+  // children: PropTypes.node,
   validator: PropTypes.func,
   onStateChanged: PropTypes.func,
   highlightOff: PropTypes.bool,

@@ -109,8 +109,8 @@ class Formula extends Component {
 
     /*
      * Since we are using Redux and the properties are form the respective reducers
-     * Add a new life cylce method to check when the component recieves new properties 
-     * so that we are able to update the state accordingly 
+     * Add a new life cylce method to check when the component recieves new properties
+     * so that we are able to update the state accordingly
      */
     this.componentWillReceiveProps = nextProps => {
       if (nextProps.errors) {
@@ -163,7 +163,7 @@ const mapStateToProps = state => ({
 
 Formula.propTypes = {
   updateFormula: PropTypes.func,
-  formula: PropTypes.string.isRequired,
+  // formula: PropTypes.string.isRequired,
   // history: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };

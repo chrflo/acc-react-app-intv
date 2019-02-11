@@ -16,7 +16,7 @@ class History extends Component {
           value={formula}
         >
           {formula}
-          <span class="badge badge-primary badge-pill">{count}</span>
+          <span className="badge badge-primary badge-pill">{count}</span>
         </li>
       );
     };

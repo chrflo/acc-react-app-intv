@@ -86,8 +86,8 @@ class Graph extends Component {
 
     /*
      * Since we are using Redux and the properties are form the respective reducers
-     * Add a new life cylce method to check when the component recieves new properties 
-     * so that we are able to update the state accordingly 
+     * Add a new life cylce method to check when the component recieves new properties
+     * so that we are able to update the state accordingly
      */
     this.componentWillReceiveProps = nextProps => {
       const state = this.state;
@@ -236,9 +236,9 @@ const mapStateToProps = state => ({
 });
 
 Graph.propTypes = {
-  clearFormula: PropTypes.func,
-  formula: PropTypes.string.isRequired,
-  errors: PropTypes.object.isRequired
+  // clearFormula: PropTypes.func,
+  // formula: PropTypes.string.isRequired,
+  // errors: PropTypes.object.isRequired
 };
 
 export default connect(

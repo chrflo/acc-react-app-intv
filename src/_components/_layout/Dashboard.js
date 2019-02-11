@@ -5,12 +5,12 @@ import Graph from "../_functional/Graph";
 class Dashboard extends Component {
   render() {
     return (
-      <div class="container">
-        <div class="row">
-          <div class="col-sm text-left">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm text-left">
             <Graph />
           </div>
-          <div class="col-sm text-right">
+          <div className="col-sm text-right">
             <Formula />
           </div>
         </div>

@@ -8,7 +8,7 @@ class ModalGraph extends Component {
   }
 
   render() {
-    const { chart, showModal } = this.props;
+    const { showModal } = this.props;
 
     return (
       <div className="container">
